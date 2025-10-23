@@ -79,7 +79,7 @@ This project implements a distributed consensus system that allows multiple clie
 
 1. **Clone the project**
    ```bash
-   git clone <repository-url>
+   git clone (https://github.com/alexandrabaron/Distributed-Lock-System.git)
    cd distributed-lock-project
    ```
 
@@ -322,4 +322,5 @@ The system displays detailed logs with:
 ---
 
 **🎉 Thank you for using our distributed lock system!**
+
 
