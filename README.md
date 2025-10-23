@@ -205,13 +205,20 @@ sequenceDiagram
     participant L as Leader
     participant F2 as Other Followers
 
-    C->>F: LOCK request
+    Note over C,F: Scenario 1: LOCK/UNLOCK Operation
+    C->>F: LOCK/UNLOCK request
     F->>L: Forward request
-    L->>L: Validate & update map
+    L->>L: Validate & update leader map
     L->>F2: SYNC message
     F2->>L: ACK
     L->>F: SUCCESS response
+    F->>F: Update local map
     F->>C: SUCCESS response
+
+    Note over C,F: Scenario 2: OWN Operation (Direct)
+    C->>F: OWN request
+    F->>F: Check local map directly
+    F->>C: Return owner info
 ```
 
 ### Thread Management
