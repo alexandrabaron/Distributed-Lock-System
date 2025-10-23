@@ -14,7 +14,6 @@ A distributed consensus system implementing a distributed lock mechanism with on
 - [Technical Architecture](#technical-architecture)
 - [Communication Protocol](#communication-protocol)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
 
 ## 🎯 Overview
 
@@ -311,39 +310,16 @@ The system displays detailed logs with:
 - Implement client authentication
 - Add audit logs
 
-## 🤝 Contributing
-
-### How to Contribute
-
-1. Fork the project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Code Standards
-
-- Follow Java conventions
-- Add comments for complex functions
-- Test modifications
-- Update documentation
-
-## 📄 License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
 ## 👥 Authors
 
-- **Alexandra** - Initial development
-- **ICT3 Team** - Testing and validation
-
-## 📞 Support
-
-For any questions or issues:
-- Open an issue on GitHub
-- Contact the development team
-- Consult technical documentation
+- **Alexandra Baron**
+- **Maria Stivala**
+- **Mathis Liens**
+- **Arnaud**
+- **Charles**
+- **Baptiste Halçaren**
 
 ---
 
 **🎉 Thank you for using our distributed lock system!**
+
