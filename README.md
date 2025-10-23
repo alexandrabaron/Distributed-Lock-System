@@ -1,33 +1,33 @@
-# 🔒 Système de Verrous Distribués avec Consensus
+# 🔒 Distributed Lock System with Consensus
 
-Un système de consensus distribué implémentant un mécanisme de verrous distribués avec un serveur leader et plusieurs serveurs followers, garantissant la cohérence des données à travers la réplication.
+A distributed consensus system implementing a distributed lock mechanism with one leader server and multiple follower servers, ensuring data consistency through replication.
 
-## 📋 Table des matières
+## 📋 Table of Contents
 
-- [Vue d'ensemble](#vue-densemble)
+- [Overview](#overview)
 - [Architecture](#architecture)
-- [Fonctionnalités](#fonctionnalités)
+- [Features](#features)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Utilisation](#utilisation)
-- [Tests](#tests)
-- [Architecture technique](#architecture-technique)
-- [Protocole de communication](#protocole-de-communication)
-- [Dépannage](#dépannage)
-- [Contributions](#contributions)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Technical Architecture](#technical-architecture)
+- [Communication Protocol](#communication-protocol)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
 
-## 🎯 Vue d'ensemble
+## 🎯 Overview
 
-Ce projet implémente un système de consensus distribué qui permet à plusieurs clients de gérer des verrous distribués de manière cohérente. Le système garantit qu'un seul client peut posséder un verrou à la fois, même dans un environnement distribué.
+This project implements a distributed consensus system that allows multiple clients to manage distributed locks in a consistent manner. The system ensures that only one client can own a lock at a time, even in a distributed environment.
 
-### Caractéristiques principales
+### Key Features
 
-- ✅ **Architecture Leader-Follower** avec réplication automatique
-- ✅ **Cohérence forte** des données entre tous les serveurs
-- ✅ **Protocole de synchronisation robuste** avec ACK et timeouts
-- ✅ **Gestion d'erreurs avancée** avec logs détaillés
-- ✅ **Monitoring en temps réel** du statut des serveurs
-- ✅ **Communication Socket** pour la connectivité réseau
+- ✅ **Leader-Follower Architecture** with automatic replication
+- ✅ **Strong consistency** of data across all servers
+- ✅ **Robust synchronization protocol** with ACK and timeouts
+- ✅ **Advanced error handling** with detailed logging
+- ✅ **Real-time monitoring** of server status
+- ✅ **Socket communication** for network connectivity
 
 ## 🏗️ Architecture
 
@@ -42,75 +42,75 @@ Ce projet implémente un système de consensus distribué qui permet à plusieur
                                  │
                     ┌─────────────────┐
                     │     Clients     │
-                    │  (Multiples)    │
+                    │  (Multiple)     │
                     └─────────────────┘
 ```
 
-### Composants
+### Components
 
-- **Leader Server** : Gère toutes les opérations de verrous et synchronise avec les followers
-- **Follower Servers** : Répliquent la map du leader et peuvent répondre aux requêtes de lecture
-- **Clients** : Se connectent à n'importe quel serveur pour effectuer des opérations
+- **Leader Server**: Manages all lock operations and synchronizes with followers
+- **Follower Servers**: Replicate the leader's map and can respond to read requests
+- **Clients**: Connect to any server to perform operations
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-### Opérations supportées
+### Supported Operations
 
-| Opération | Description | Serveur |
+| Operation | Description | Server |
 |-----------|-------------|---------|
-| `LOCK` | Acquérir un verrou distribué | Leader uniquement |
-| `UNLOCK` | Libérer un verrou distribué | Leader uniquement |
-| `OWN` | Vérifier le propriétaire d'un verrou | Tous les serveurs |
+| `LOCK` | Acquire a distributed lock | Leader only |
+| `UNLOCK` | Release a distributed lock | Leader only |
+| `OWN` | Check the owner of a lock | All servers |
 
-### Règles de fonctionnement
+### Operating Rules
 
-- **LOCK** : Succès si le verrou n'existe pas, échec sinon
-- **UNLOCK** : Succès si le client possède le verrou, échec sinon
-- **OWN** : Retourne l'ID du client propriétaire ou "NONE"
+- **LOCK**: Success if lock doesn't exist, failure otherwise
+- **UNLOCK**: Success if client owns the lock, failure otherwise
+- **OWN**: Returns the owner client ID or "NONE"
 
 ## 📦 Installation
 
-### Prérequis
+### Prerequisites
 
-- Java 8 ou supérieur
-- 3 machines virtuelles Ubuntu (ou machines physiques)
-- Connectivité réseau entre les machines
+- Java 8 or higher
+- 3 Ubuntu virtual machines (or physical machines)
+- Network connectivity between machines
 
-### Étapes d'installation
+### Installation Steps
 
-1. **Cloner le projet**
+1. **Clone the project**
    ```bash
    git clone <repository-url>
    cd distributed-lock-project
    ```
 
-2. **Compiler les fichiers Java**
+2. **Compile Java files**
    ```bash
    javac Server.java
    javac Client.java
    javac DistributedLockTest.java
    ```
 
-3. **Configurer le firewall** (sur chaque VM)
+3. **Configure firewall** (on each VM)
    ```bash
    sudo ufw allow 5000
    ```
 
 ## ⚙️ Configuration
 
-### Configuration réseau
+### Network Configuration
 
-Le système est configuré pour fonctionner avec les adresses IP suivantes :
+The system is configured to work with the following IP addresses:
 
-| Serveur | Adresse IP | Port | Rôle |
+| Server | IP Address | Port | Role |
 |---------|------------|------|------|
-| Leader | 10.0.2.3 | 5000 | Serveur principal |
-| Follower 1 | 10.0.2.4 | 5000 | Serveur répliqué |
-| Follower 2 | 10.0.2.5 | 5000 | Serveur répliqué |
+| Leader | 10.0.2.3 | 5000 | Primary server |
+| Follower 1 | 10.0.2.4 | 5000 | Replicated server |
+| Follower 2 | 10.0.2.5 | 5000 | Replicated server |
 
-### Modification de la configuration
+### Configuration Modification
 
-Pour changer les adresses IP, modifiez le fichier `Server.java` :
+To change IP addresses, modify the `Server.java` file:
 
 ```java
 private static final Map<String, Integer> SERVER_PORTS = new HashMap<>();
@@ -121,68 +121,68 @@ static {
 }
 ```
 
-## 🎮 Utilisation
+## 🎮 Usage
 
-### Démarrage des serveurs
+### Starting Servers
 
-**⚠️ Important : Démarrer dans l'ordre suivant**
+**⚠️ Important: Start in the following order**
 
-1. **Démarrer le Leader** (VM 10.0.2.3)
+1. **Start the Leader** (VM 10.0.2.3)
    ```bash
    java Server 10.0.2.3 5000 leader
    ```
 
-2. **Attendre 5 secondes, puis démarrer Follower 1** (VM 10.0.2.4)
+2. **Wait 5 seconds, then start Follower 1** (VM 10.0.2.4)
    ```bash
    java Server 10.0.2.4 5000 follower
    ```
 
-3. **Attendre 5 secondes, puis démarrer Follower 2** (VM 10.0.2.5)
+3. **Wait 5 seconds, then start Follower 2** (VM 10.0.2.5)
    ```bash
    java Server 10.0.2.5 5000 follower
    ```
 
-### Utilisation des clients
+### Using Clients
 
-**Test simple :**
+**Simple test:**
 ```bash
 java Client <server_ip> <port> <client_id>
 ```
 
-**Exemples :**
+**Examples:**
 ```bash
-# Se connecter au leader
+# Connect to leader
 java Client 10.0.2.3 5000 Client1
 
-# Se connecter à un follower
+# Connect to a follower
 java Client 10.0.2.4 5000 Client2
 ```
 
-## 🧪 Tests
+## 🧪 Testing
 
-### Test automatisé
+### Automated Test
 
 ```bash
 java DistributedLockTest
 ```
 
-Ce test effectue :
-- Acquisition de verrous concurrents
-- Vérification de la cohérence
-- Tests de libération de verrous
-- Simulation d'accès concurrent
+This test performs:
+- Concurrent lock acquisition
+- Consistency verification
+- Lock release tests
+- Concurrent access simulation
 
-### Test manuel
+### Manual Test
 
 ```bash
-# Test séquentiel
+# Sequential test
 java Client 10.0.2.3 5000 Client1
 
-# Test concurrent (dans un autre terminal)
+# Concurrent test (in another terminal)
 java Client 10.0.2.4 5000 Client2
 ```
 
-### Résultats attendus
+### Expected Results
 
 ```
 === Testing Lock Sequence for lock1 ===
@@ -195,9 +195,9 @@ Client Client1 - Owner of lock1: NONE
 === End of Test Sequence ===
 ```
 
-## 🔧 Architecture technique
+## 🔧 Technical Architecture
 
-### Flux de données
+### Data Flow
 
 ```mermaid
 sequenceDiagram
@@ -215,135 +215,135 @@ sequenceDiagram
     F->>C: SUCCESS response
 ```
 
-### Gestion des threads
+### Thread Management
 
-- **Thread Pool** : Utilisation d'`ExecutorService` pour gérer les connexions
-- **Thread Safety** : Synchronisation avec `synchronized` sur les opérations critiques
-- **Timeout** : Gestion des timeouts pour éviter les blocages
+- **Thread Pool**: Uses `ExecutorService` to manage connections
+- **Thread Safety**: Synchronization with `synchronized` on critical operations
+- **Timeout**: Timeout handling to prevent deadlocks
 
-## 📡 Protocole de communication
+## 📡 Communication Protocol
 
-### Messages client-serveur
-
-| Message | Format | Description |
-|---------|--------|-------------|
-| LOCK | `LOCK,<lockName>,<clientId>` | Demande d'acquisition |
-| UNLOCK | `UNLOCK,<lockName>,<clientId>` | Demande de libération |
-| OWN | `OWN,<lockName>,<clientId>` | Demande de propriétaire |
-
-### Messages inter-serveurs
+### Client-Server Messages
 
 | Message | Format | Description |
 |---------|--------|-------------|
-| SYNC | `SYNC,<command>,<lockName>,<clientId>` | Synchronisation |
-| REGISTER | `REGISTER,<serverIp>:<port>` | Enregistrement follower |
-| ACK | `ACK` | Accusé de réception |
+| LOCK | `LOCK,<lockName>,<clientId>` | Acquisition request |
+| UNLOCK | `UNLOCK,<lockName>,<clientId>` | Release request |
+| OWN | `OWN,<lockName>,<clientId>` | Owner request |
 
-### Réponses
+### Inter-Server Messages
 
-| Réponse | Description |
+| Message | Format | Description |
+|---------|--------|-------------|
+| SYNC | `SYNC,<command>,<lockName>,<clientId>` | Synchronization |
+| REGISTER | `REGISTER,<serverIp>:<port>` | Follower registration |
+| ACK | `ACK` | Acknowledgment |
+
+### Responses
+
+| Response | Description |
 |---------|-------------|
-| `SUCCESS` | Opération réussie |
-| `FAIL` | Opération échouée |
-| `NONE` | Aucun propriétaire |
-| `ERROR` | Erreur système |
-| `TIMEOUT` | Timeout réseau |
+| `SUCCESS` | Operation successful |
+| `FAIL` | Operation failed |
+| `NONE` | No owner |
+| `ERROR` | System error |
+| `TIMEOUT` | Network timeout |
 
-## 🚨 Dépannage
+## 🚨 Troubleshooting
 
-### Problèmes courants
+### Common Issues
 
-| Erreur | Cause | Solution |
+| Error | Cause | Solution |
 |--------|-------|----------|
-| `Connection refused` | Serveur non démarré | Vérifier que les serveurs sont lancés |
-| `Port already in use` | Port occupé | `sudo lsof -i :5000` puis `sudo kill -9 <PID>` |
-| `Timeout` | Problème réseau | Vérifier la connectivité entre VMs |
-| `Registration failed` | Leader non démarré | Démarrer le leader avant les followers |
+| `Connection refused` | Server not started | Check that servers are running |
+| `Port already in use` | Port occupied | `sudo lsof -i :5000` then `sudo kill -9 <PID>` |
+| `Timeout` | Network issue | Check connectivity between VMs |
+| `Registration failed` | Leader not started | Start leader before followers |
 
-### Commandes de diagnostic
+### Diagnostic Commands
 
 ```bash
-# Vérifier les ports utilisés
+# Check used ports
 sudo lsof -i :5000
 
-# Tester la connectivité
+# Test connectivity
 ping 10.0.2.3
 telnet 10.0.2.3 5000
 
-# Vérifier les logs
+# Check logs
 tail -f server.log
 ```
 
-### Logs et monitoring
+### Logs and Monitoring
 
-Le système affiche des logs détaillés avec :
-- 🔗 Connexions entrantes
-- 📨 Messages reçus/envoyés
-- 🔄 Opérations de synchronisation
-- ⚠️ Erreurs et timeouts
-- 📊 Statut des serveurs
+The system displays detailed logs with:
+- 🔗 Incoming connections
+- 📨 Messages received/sent
+- 🔄 Synchronization operations
+- ⚠️ Errors and timeouts
+- 📊 Server status
 
 ## 📊 Performance
 
-### Métriques
+### Metrics
 
-- **Latence** : ~10-50ms pour les opérations locales
-- **Throughput** : ~100-500 opérations/seconde
-- **Cohérence** : 100% (cohérence forte garantie)
+- **Latency**: ~10-50ms for local operations
+- **Throughput**: ~100-500 operations/second
+- **Consistency**: 100% (strong consistency guaranteed)
 
-### Optimisations
+### Optimizations
 
-- **Thread Pool** : Gestion efficace des connexions
-- **Timeout** : Évite les blocages
-- **Logs asynchrones** : Pas d'impact sur les performances
+- **Thread Pool**: Efficient connection management
+- **Timeout**: Prevents deadlocks
+- **Asynchronous logs**: No performance impact
 
-## 🔒 Sécurité
+## 🔒 Security
 
-### Considérations
+### Considerations
 
-- **Authentification** : Non implémentée (ajout possible)
-- **Chiffrement** : Communication en clair (TLS possible)
-- **Autorisation** : Contrôle d'accès basique par client ID
+- **Authentication**: Not implemented (can be added)
+- **Encryption**: Clear communication (TLS possible)
+- **Authorization**: Basic access control by client ID
 
-### Recommandations
+### Recommendations
 
-- Utiliser TLS pour la communication
-- Implémenter l'authentification des clients
-- Ajouter des logs d'audit
+- Use TLS for communication
+- Implement client authentication
+- Add audit logs
 
-## 🤝 Contributions
+## 🤝 Contributing
 
-### Comment contribuer
+### How to Contribute
 
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Standards de code
+### Code Standards
 
-- Respecter les conventions Java
-- Ajouter des commentaires pour les fonctions complexes
-- Tester les modifications
-- Mettre à jour la documentation
+- Follow Java conventions
+- Add comments for complex functions
+- Test modifications
+- Update documentation
 
-## 📄 Licence
+## 📄 License
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
-## 👥 Auteurs
+## 👥 Authors
 
-- **Alexandra** - Développement initial
-- **Équipe ICT3** - Tests et validation
+- **Alexandra** - Initial development
+- **ICT3 Team** - Testing and validation
 
 ## 📞 Support
 
-Pour toute question ou problème :
-- Ouvrir une issue sur GitHub
-- Contacter l'équipe de développement
-- Consulter la documentation technique
+For any questions or issues:
+- Open an issue on GitHub
+- Contact the development team
+- Consult technical documentation
 
 ---
 
-**🎉 Merci d'utiliser notre système de verrous distribués !**
+**🎉 Thank you for using our distributed lock system!**
