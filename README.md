@@ -289,20 +289,6 @@ The system displays detailed logs with:
 - Errors and timeouts
 - Server status
 
-## Performance
-
-### Metrics
-
-- **Latency**: ~10-50ms for local operations
-- **Throughput**: ~100-500 operations/second
-- **Consistency**: 100% (strong consistency guaranteed)
-
-### Optimizations
-
-- **Thread Pool**: Efficient connection management
-- **Timeout**: Prevents deadlocks
-- **Asynchronous logs**: No performance impact
-
 ## Security
 
 ### Considerations
@@ -310,12 +296,6 @@ The system displays detailed logs with:
 - **Authentication**: Not implemented (can be added)
 - **Encryption**: Clear communication (TLS possible)
 - **Authorization**: Basic access control by client ID
-
-### Recommendations
-
-- Use TLS for communication
-- Implement client authentication
-- Add audit logs
 
 ## Authors
 
@@ -329,6 +309,7 @@ The system displays detailed logs with:
 ---
 
 **🎉 Thank you for using our distributed lock system!**
+
 
 
 
