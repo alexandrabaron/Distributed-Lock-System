@@ -322,13 +322,14 @@ The system displays detailed logs with:
 - **Alexandra Baron**
 - **Maria Stivala**
 - **Mathis Liens**
-- **Arnaud**
+- **Arnaud Brisset**
 - **Charles**
 - **Baptiste Halçaren**
 
 ---
 
 **🎉 Thank you for using our distributed lock system!**
+
 
 
 
